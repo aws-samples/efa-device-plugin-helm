@@ -1,11 +1,8 @@
-## My Project
-
-TODO: Fill this README out!
-
-Be sure to:
-
-* Change the title in this README
-* Edit your repository description on GitHub
+## Usage
+We use [Helm](https://helm.sh/) to package [EFA](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/efa.html) device plugin:
+```
+helm install efa ./aws-efa-k8s-device-plugin -n kube-system
+```
 
 ## Security
 
