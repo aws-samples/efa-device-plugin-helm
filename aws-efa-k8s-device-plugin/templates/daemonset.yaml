@@ -12,12 +12,11 @@ spec:
     type: RollingUpdate
   template:
     metadata:
-      # This annotation is deprecated. Kept here for backward compatibility
-      # See https://kubernetes.io/docs/tasks/administer-cluster/guaranteed-scheduling-critical-addon-pods/
+      {{- if .Values.additionalPodAnnotations }}
       annotations:
-        scheduler.alpha.kubernetes.io/critical-pod: ""
         {{- with .Values.additionalPodAnnotations }}
           {{- toYaml . | nindent 8 }}
+        {{- end }}
         {{- end }}
       labels:
         name: {{ include "aws-efa-k8s-device-plugin.fullname" . }}
@@ -58,7 +57,6 @@ spec:
       hostNetwork: true
       containers:
         - image: {{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}
-          imagePullPolicy: Always
           name: aws-efa-k8s-device-plugin
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12}}
